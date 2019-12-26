@@ -1,0 +1,9 @@
+sudo: required # need super permission
+services:
+  - docker # tell Travis we need Docker CLI preinstalled
+
+before_install: # execute some setup, steps we need to do before run test
+  - docker build -t nqthai/docker-react -f Dockerfile.dev . # build docker image
+
+script: # series of commands that need to be executed to run test.
+  - docker run -e CI=true nqthai/docker-react npm run test

@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    build:
+      context: . # define directory contains Dockerfile
+      dockerfile: Dockerfile.dev # run specific Dockerfile
+    ports: 
+      - "3001:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  
+  test: # test run no need use any port
+    build:
+      context: . # define directory contains Dockerfile
+      dockerfile: Dockerfile.dev # run specific Dockerfile
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"] # override fault command in Dockerfile
