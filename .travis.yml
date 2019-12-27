@@ -7,3 +7,15 @@ before_install: # execute some setup, steps we need to do before run test
 
 script: # series of commands that need to be executed to run test.
   - docker run -e CI=true nqthai/docker-react npm run test
+
+deploy: # how to deploy code to server (Ex: AWS)
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react" # name of app in deploy server (Ex: AWS Elasticbeanstalk created app)
+  env: "DockerReact-env" # environment name
+  bucket_name: "elasticbeanstalk-us-east-2-433126474652" # from s3 bucket where contains code and zip it, and tell elasticbeanstalk redeploy
+  bucket_path: "docker-react" # almost has same name with app name
+  on # only deploy when we push code to branch...
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY # reference to env variables on Travis setting for this project
+  secret_access_key: $AWS_SECRET_KEY
